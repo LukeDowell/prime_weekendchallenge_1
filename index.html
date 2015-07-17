@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+<header>
+    <h1>Employee Management Suite</h1>
+    <p>Total Salary: <span id="totalSalary"> </span></p>
+</header>
+    <!-- Our employee entry form overlay -->
+    <div id="entryOverlay">
+        <form id="entryForm">
+            <div class="entryFormInputs">
+                <p>First</p>
+                <input type="text" name="firstName" value="Luke">
+
+                <p>Last</p>
+                <input type="text" name="lastName" value="Dowell">
+
+                <p>Employee #</p>
+                <input type="text" name="empNum" value="123456">
+
+                <p>Title</p>
+                <input type="text" name="empTitle" value="Solutions Engineer">
+
+                <p>Last Review</p>
+                <input type="text" name="empReview" value="5">
+
+                <p>Salary</p>
+                <input type="text" name="empSalary" value="100,000">
+            </div>
+            <input type="submit" value="Submit" name="submitButton">
+            <button id="randomizeButton">Random</button> <!--We are making this a button element so we don't accidentally submit the form-->
+        </form>
+    </div>
+    <div class="employeeCard">
+        <div class="employeeCardHeader">
+            <p class="employeeName">Luke Dowell</p>
+            <p class="employeeId">#123456</p>
+        </div>
+        <p class="employeeTitle">Solutions Engineer</p>
+        <p class="employeeSalary">$100,000</p>
+        <p class="employeeReview">-- Review: 5</p>
+    </div>
+</body>
+</html>
