@@ -3,7 +3,6 @@ html, body, header  {
     margin: 0px;
 }
 
-
 p, h1 {
     font-family: Arial, sans-serif;
 }
@@ -17,6 +16,65 @@ header {
 
 header h1 {
     color: white;
+}
+
+#entryOverlay {
+    border: 2px solid black;
+    width: 500px;
+    height: 200px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    margin: auto;
+    transition: opacity 700ms ease-in;
+}
+
+.entryFormInputs a {
+    float: right;
+    position: relative;
+    top: -15px;
+    right: -5px;
+}
+.entryFormRow {
+    margin: 5px 5px 10px 5px;
+}
+
+.entryFormRow:last-child {
+    border-bottom: 2px solid black;
+}
+
+.entryFormRow p, input {
+    display: inline;
+}
+
+.entryFormRow p {
+    margin-right: 15px;
+}
+
+.entryFormRow input { /* Messy, only needed on the first input field (firstName) */
+    margin-right: 40px;
+}
+
+.entryFormButtonGroup {
+    text-align: center;
+}
+
+.entryFormButtonGroup button {
+    font-size: 15px;
+}
+
+.entryFormButtonGroup #randomizeButton {
+    position: relative;
+    right: -150px;
+    height: 35px;
+}
+
+.entryFormButtonGroup #submitButton {
+    height: 35px;
+    width: 100px;
 }
 
 .employeeCard {
@@ -49,13 +107,5 @@ header h1 {
     top: 0em;
     right: -45px;
     color: dimgrey;
-}
-
-#entryFormInputs input {
-    display: block;
-}
-
-#entryFormInputs p {
-    display: inline;
 }
 

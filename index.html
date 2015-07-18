@@ -15,36 +15,51 @@
     <div id="entryOverlay">
         <form id="entryForm">
             <div class="entryFormInputs">
-                <p>First</p>
-                <input type="text" name="firstName" value="Luke">
+                <a href="" id="closeButton">X</a>
+                <div class="entryFormRow">
+                    <p>First</p>
+                    <input type="text" name="firstName" value="Luke">
 
-                <p>Last</p>
-                <input type="text" name="lastName" value="Dowell">
+                    <p>Last</p>
+                    <input type="text" name="lastName" value="Dowell">
+                </div>
 
-                <p>Employee #</p>
-                <input type="text" name="empNum" value="123456">
+                <div class="entryFormRow">
+                    <p>Employee #</p>
+                    <input type="text" name="empNum" value="123456">
+                </div>
 
-                <p>Title</p>
-                <input type="text" name="empTitle" value="Solutions Engineer">
+                <div class="entryFormRow">
+                    <p>Title</p>
+                    <input type="text" name="empTitle" value="Solutions Engineer">
+                </div>
 
-                <p>Last Review</p>
-                <input type="text" name="empReview" value="5">
+                <div class="entryFormRow">
+                    <p>Last Review</p>
+                    <input type="text" name="empReview" value="5">
+                </div>
 
-                <p>Salary</p>
-                <input type="text" name="empSalary" value="100,000">
+                <div class="entryFormRow">
+                    <p>Salary</p>
+                    <input type="text" name="empSalary" value="100,000">
+                </div>
             </div>
-            <input type="submit" value="Submit" name="submitButton">
-            <button id="randomizeButton">Random</button> <!--We are making this a button element so we don't accidentally submit the form-->
+            <div class="entryFormButtonGroup">
+                <button id="submitButton">Submit</button>
+                <button id="randomizeButton">Random</button>
+            </div>
         </form>
     </div>
-    <div class="employeeCard">
-        <div class="employeeCardHeader">
-            <p class="employeeName">Luke Dowell</p>
-            <p class="employeeId">#123456</p>
+    <div class="employeeCardContainer">
+        <div class="employeeCard">
+            <div class="employeeCardHeader">
+                <p class="employeeName">Luke Dowell</p>
+                <p class="employeeId">#123456</p>
+            </div>
+            <p class="employeeTitle">Solutions Engineer</p>
+            <p class="employeeSalary">$100,000</p>
+            <p class="employeeReview">Review: 5</p>
         </div>
-        <p class="employeeTitle">Solutions Engineer</p>
-        <p class="employeeSalary">$100,000</p>
-        <p class="employeeReview">-- Review: 5</p>
     </div>
 </body>
 </html>

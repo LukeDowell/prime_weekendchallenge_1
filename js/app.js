@@ -4,9 +4,10 @@
 $(document).ready(function() {
 
     //When the submit button is pressed on our form
-    $("#entryForm").submit(function(event) {
+    //.submit was acting strangely so I switched to a standard event handler
+    $("#submitButton").on('click', function(event) {
         event.preventDefault(); //prevent a page refresh
-
+        var $form = $("#entryForm");
 
         //Check to see if we already have an employee with the provided ID
         var empId = $("[name='empNum']").val();
@@ -22,7 +23,7 @@ $(document).ready(function() {
                 $("[name='empSalary']").val()
             );
             employees.push(emp);
-
+            $form.reset();
         } else {
 
             //We already have an employee with that ID
@@ -30,16 +31,19 @@ $(document).ready(function() {
             return;
 
         }
-        //Clear the form
     });
 
     $("#randomizeButton").on('click', function(event){
+        event.preventDefault();
+
         var emp = generateEmployee();
         if(findEmployeeById(emp) != null) {
             var createdValidEmployee = false;
             while(!createdValidEmployee) {
                 emp = generateEmployee();
-
+                if(findEmployeeById(emp) == null) {
+                    createdValidEmployee = true;
+                }
             }
         }
         console.log(emp);
@@ -49,6 +53,7 @@ $(document).ready(function() {
 
 var employees = []; //Where we store our employees
 
+//Our arrays containing 'random' information
 var FIRST_NAMES = ["Susan", "Sandy", "Salmon", "Sorbet", "Shakira", "Rafi"];
 var LAST_NAMES = ["O'Mally", "O'Donnel", "O'SayCanYouSee", "Smith"];
 var OCCUPATION = ["Painter", "Printer", "Police-r", "Programmer", "Podcaster", "Mailman"];
@@ -77,10 +82,12 @@ function Employee(first, last, id, title, review, salary) {
     this.review = review;
     this.salary = salary;
 }
-Employee.prototype.toString = function() {
-    return this.firstName + " " + this.lastName + " ID: " + this.id + " -- Occupation: " + this.title + " -- Rating: " + this.review + " -- Salary: $" + this.salary;
-}
 
+/**
+ * Creates an employee with semi-random information
+ * @returns {Employee}
+ *      A randomized employee
+ */
 function generateEmployee() {
     var randomId = "";
     var randomIdLength = 5;
@@ -103,6 +110,11 @@ function generateEmployee() {
  *      The employee we are inserting
  */
 function insertEmployeeCard(employee) {
+
+    //PLAN FOR SATURDAY
+    //Make a global element employeeCard
+    //Put all the shit u need in there
+    //The end
 
     //EMPLOYEE VALUES
     var name = employee.firstName + " " + employee.lastName;
