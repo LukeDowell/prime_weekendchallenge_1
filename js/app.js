@@ -23,13 +23,12 @@ $(document).ready(function() {
                 $("[name='empSalary']").val()
             );
             employees.push(emp);
-            $form.reset();
+            var employeeCard = new EmployeeCard(emp);
+            employeeCards.push(employeeCard);
         } else {
 
             //We already have an employee with that ID
             alert("That employee number is already taken!");
-            return;
-
         }
     });
 
@@ -48,15 +47,18 @@ $(document).ready(function() {
         }
         console.log(emp);
         employees.push(emp);
+        var employeeCard = new EmployeeCard(emp);
+        employeeCards.push(employeeCard);
     });
 });
 
 var employees = []; //Where we store our employees
+var employeeCards = []; //Where we store our employee cards
 
 //Our arrays containing 'random' information
-var FIRST_NAMES = ["Susan", "Sandy", "Salmon", "Sorbet", "Shakira", "Rafi"];
-var LAST_NAMES = ["O'Mally", "O'Donnel", "O'SayCanYouSee", "Smith"];
-var OCCUPATION = ["Painter", "Printer", "Police-r", "Programmer", "Podcaster", "Mailman"];
+var FIRST_NAMES = ["Susan", "Sandy", "Salmon", "Sorbet", "Shakira", "Rafi", "Rufus", "Rondo", "Mazer", "Mack", "Mistriss"];
+var LAST_NAMES = ["O'Mally", "O'Donnel", "O'SayCanYouSee", "Smith" , "Rackham", "Dowell", "Alan", "Ender", "Valentine"];
+var OCCUPATION = ["Painter", "Printer", "Police-r", "Programmer", "Podcaster", "Mailman", "Pool Boy", "Ninja", "Spy"];
 
 /**
  * An employee object
@@ -84,6 +86,57 @@ function Employee(first, last, id, title, review, salary) {
 }
 
 /**
+ * Creates an employee card element
+ * @param employee
+ *      The employee whose information we want to populate the card with
+ */
+function EmployeeCard(employee) {
+    //Pull out all their information into paragraph elements
+    var $pName = $("<p/>", {
+        class: "employeeName",
+        text: employee.firstName + " " + employee.lastName
+    });
+
+    var $pId = $("<p/>", {
+        class: "employeeId",
+        text: employee.id
+    });
+
+    var $pTitle = $('<p/>', {
+        class: "employeeTitle",
+        text: employee.title
+    });
+
+    var $pSalary = $('<p/>', {
+        class: "employeeSalary",
+        text: employee.salary
+    });
+
+    var $pReview = $('<p/>', {
+        class: "employeeReview",
+        text: "Review: " + employee.review
+    });
+
+    var $card = $("<div/>", {
+        class: "employeeCard"
+    });
+
+    var $cardHeader = $("<div/>", {
+        class: "employeeCardHeader"
+    });
+
+    $cardHeader.append($pName);
+    $cardHeader.append($pId);
+
+    $card.append($cardHeader);
+    $card.append($pTitle);
+    $card.append($pSalary);
+    $card.append($pReview);
+
+    $(".employeeCardContainer").append($card);
+}
+
+/**
  * Creates an employee with semi-random information
  * @returns {Employee}
  *      A randomized employee
@@ -102,29 +155,6 @@ function generateEmployee() {
         getRandomInt(0, 6),
         getRandomInt(0, 100000)
     )
-}
-
-/**
- * Inserts an employee card into the DOM
- * @param employee
- *      The employee we are inserting
- */
-function insertEmployeeCard(employee) {
-
-    //PLAN FOR SATURDAY
-    //Make a global element employeeCard
-    //Put all the shit u need in there
-    //The end
-
-    //EMPLOYEE VALUES
-    var name = employee.firstName + " " + employee.lastName;
-    var id = employee.id;
-    var title = employee.title;
-    var review = employee.review;
-    var salary = employee.salary;
-
-    //HTML ELEMENTS
-
 }
 
 /**
