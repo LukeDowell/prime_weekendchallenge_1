@@ -2,36 +2,47 @@
  * Created by lukedowell on 7/17/15.
  */
 $(document).ready(function() {
+    calculateTotalSalary();
 
-    //When the submit button is pressed on our form
-    //.submit was acting strangely so I switched to a standard event handler
+    //When the submit button is clicked
     $("#submitButton").on('click', function(event) {
         event.preventDefault(); //prevent a page refresh
 
-        //Check to see if we already have an employee with the provided ID
-        var empId = $("[name='empNum']").val();
-        if(findEmployeeById(empId) == null) {
+        var $inputs = $("#entryForm :input");
+        var values = {};
+
+        $inputs.each(function() {
+            //If they left a field blank, back out
+            if($(this).val().length < 1) {
+                alert("Please fill out all the text fields");
+                return;
+            }
+            values[this.name] = $(this).val();
+        });
+
+        if(findEmployeeById(values.empNum) == null) {
 
             //Put all our information into a jquery object
             var emp = new Employee(
-                $("[name='firstName']").val(),
-                $("[name='lastName']").val(),
-                empId,
-                $("[name='empTitle']").val(),
-                $("[name='empReview']").val(),
-                $("[name='empSalary']").val()
+                values.firstName,
+                values.lastName,
+                values.empNum,
+                values.empTitle,
+                values.empReview,
+                values.empSalary
             );
             employees.push(emp);
             var employeeCard = new EmployeeCard(emp);
-            employeeCards.push(employeeCard);
             insertCard(employeeCard);
         } else {
 
             //We already have an employee with that ID
             alert("That employee number is already taken!");
         }
+        calculateTotalSalary();
     });
 
+    //Our randomize button is clicked
     $("#randomizeButton").on('click', function(event){
         event.preventDefault();
 
@@ -48,22 +59,30 @@ $(document).ready(function() {
         console.log(emp);
         employees.push(emp);
         var employeeCard = new EmployeeCard(emp);
-        employeeCards.push(employeeCard);
         insertCard(employeeCard);
+        calculateTotalSalary();
     });
 
+    $(".employeeCardContainer").on('click', '.employeeCardCloseButton', function() {
+        console.log("Event fired");
+        var $card = $(this).parent().parent();
+        deleteEmployee($card);
+    });
+
+    //Entry overlay
     $("#closeButton").on('click', function(event) {
         event.preventDefault();
         $("#entryOverlay").hide();
     });
 
+    //Temp event
     $("header").on('click', function() {
         $("#entryOverlay").show();
     });
 });
 
 var employees = []; //Where we store our employees
-var employeeCards = []; //Where we store our employee cards
+//var employeeCards = []; //Where we store our employee cards
 
 //Our arrays containing 'random' information
 var FIRST_NAMES = ["Abraham", "Bob", "Carl", "Dan", "Ebert", "Frank", "George", "Heather", "Io", "Susan", "Sandy", "Salmon", "Sorbet", "Shakira", "Rafi", "Rufus", "Rondo", "Mazer", "Mack", "Mistriss"];
@@ -101,6 +120,7 @@ function Employee(first, last, id, title, review, salary) {
  *      The employee whose information we want to populate the card with
  */
 function EmployeeCard(employee) {
+
     //Pull out all their information into paragraph elements
     this.$pName = $("<p/>", {
         class: "employeeName",
@@ -168,26 +188,57 @@ function insertCard(employeeCard) {
 
     employeeCard.$cardHeader.append(employeeCard.$pName);
     employeeCard.$cardHeader.append(employeeCard.$pId);
+    employeeCard.$cardHeader.append($("<button/>", {class:"employeeCardCloseButton", text:"X"})); //Close button
 
     employeeCard.$card.append(employeeCard.$cardHeader);
     employeeCard.$card.append(employeeCard.$pTitle);
     employeeCard.$card.append(employeeCard.$pSalary);
     employeeCard.$card.append(employeeCard.$pReview);
 
+    //The code below is horrible. How do I break out of .each? return false thats how
     $(".employeeCardContainer > .employeeCard > .employeeCardHeader > .employeeName").each(function() {
         var currentCardName = $(this).text().split(" ")[0]; //Get the first name
         var newCardName = employeeCard.$pName.text().split(" ")[0]; //Get the first name
         console.log(currentCardName + " " + newCardName);
         if((newCardName < currentCardName || newCardName === currentCardName) && !added) {
             console.log("1");
+            var $card = $(this).parent().parent();
             $(this).parent().parent().before(employeeCard.$card);
             added = true;
         }
     });
 
+    //If we weren't able to find a spot to insert our card, append it to the end of our container
     if(!added) {
         $(".employeeCardContainer").append(employeeCard.$card);
     }
+}
+
+/**
+ * Removes an employeecard from the screen. Handles
+ * removing the actual javascript objects as well, and calls
+ * for the screen to recalculate the total salary
+ * @param employeeCard
+ *      The jquery employeecard we are trying to delete
+ */
+function deleteEmployee(employeeCard) {
+    var id = employeeCard.find(".employeeId").text(); //Grab the employee ID from the card
+    employees.splice(employees.indexOf(findEmployeeById(id)), 1); //Remove our employee object from our array
+    employeeCard.remove();
+    calculateTotalSalary(); //After we remove our card, recalculate our salary
+}
+
+/**
+ * Loops through our entire array of employees, adds up their salaries and puts it
+ * in the header. Idealy we would just add or subtract each time a new person is created
+ * or removed, but it's Sunday and this needs to be done.
+ */
+function calculateTotalSalary() {
+    var totalSalary = 0;
+    employees.map(function(item) {
+        totalSalary += item.salary;
+    });
+    $("#totalSalary").text(totalSalary);
 }
 
 /**
