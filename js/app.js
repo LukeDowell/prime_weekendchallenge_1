@@ -139,7 +139,7 @@ function EmployeeCard(employee) {
 
     this.$pSalary = $('<p/>', {
         class: "employeeSalary",
-        text: employee.salary
+        text: "$" + employee.salary
     });
 
     this.$pReview = $('<p/>', {
@@ -238,7 +238,7 @@ function calculateTotalSalary() {
     employees.map(function(item) {
         totalSalary += item.salary;
     });
-    $("#totalSalary").text(totalSalary);
+    $("#totalSalary").text("$" + totalSalary);
 }
 
 /**
