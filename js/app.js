@@ -73,11 +73,13 @@ $(document).ready(function() {
     $("#closeButton").on('click', function(event) {
         event.preventDefault();
         $("#entryOverlay").hide();
+        $("#overlayViewButton").show();
     });
 
     //Temp event
-    $("header").on('click', function() {
+    $("#overlayViewButton").on('click', function() {
         $("#entryOverlay").show();
+        $(this).hide();
     });
 });
 
@@ -87,7 +89,7 @@ var employees = []; //Where we store our employees
 //Our arrays containing 'random' information
 var FIRST_NAMES = ["Abraham", "Bob", "Carl", "Dan", "Ebert", "Frank", "George", "Heather", "Io", "Susan", "Sandy", "Salmon", "Sorbet", "Shakira", "Rafi", "Rufus", "Rondo", "Mazer", "Mack", "Mistriss"];
 var LAST_NAMES = ["Abbot", "Barf", "Constantine", "Dillenger", "Eckhart", "O'Mally", "O'Donnel", "O'SayCanYouSee", "Smith" , "Rackham", "Dowell", "Alan", "Ender", "Valentine"];
-var OCCUPATION = ["Painter", "Printer", "Police-r", "Programmer", "Podcaster", "Mailman", "Pool Boy", "Ninja", "Spy", "Pidgeon", "Consumer", "Buyer", "Seller"];
+var OCCUPATION = ["Painter", "Printer", "Police-r", "Programmer", "Podcaster", "Mailman", "Pool Boy", "Ninja", "Spy", "Pidgeon", "Consumer", "Buyer", "Seller", "Teacher", "Learner", "Writer", "Illustrator", "Director"];
 
 /**
  * An employee object
